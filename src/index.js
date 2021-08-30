@@ -8,13 +8,14 @@
 // console.log(process.env.API_KEY);
 
 const THREE = require("three");
+const orbit = require("three-orbitcontrols");
 
 function createRenderer() {
   let renderer = new THREE.WebGLRenderer({
     antialias: true,
   });
   renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setClearColor("#16161d"); // Eigengrau
+  renderer.setClearColor("white"); // Eigengrau
   renderer.setPixelRatio(window.devicePixelRatio);
   let output = document.querySelector("#output");
   output.appendChild(renderer.domElement);
@@ -101,6 +102,8 @@ let cube = createCube();
 let sphere = createSphere();
 let light = createLight();
 let lightHelper = createLightHelper(light);
+
+let controls = new orbit(camera, renderer.domElement);
 
 light.position.x = 10;
 light.position.y = 10;
