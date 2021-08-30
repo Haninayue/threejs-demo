@@ -39,6 +39,7 @@ function createAxesHelper() {
   let axesHelper = new THREE.AxesHelper(40);
   return axesHelper;
 }
+
 function getRandomColor() {
   let colors = [
     "dodgerblue",
@@ -79,10 +80,12 @@ function createSphere() {
   // Return the mesh
   return mesh;
 }
+
 function createLight() {
   let light = new THREE.PointLight("white", 1.2);
   return light;
 }
+
 function createLightHelper(light) {
   let helper = new THREE.PointLightHelper(light);
   return helper;
@@ -103,13 +106,35 @@ light.position.z = 10;
 
 sphere.position.x = 20;
 
+let cubes = [];
+let cubeCount = 500;
+
+for (let i = 1; i <= cubeCount; i += 1) {
+  let c = createCube();
+  c.position.x = Math.random() * 400 - 200; // -200 to 200
+  c.position.y = Math.random() * 400 - 200; // -200 to 200
+  c.position.z = Math.random() * 400 - 200; // -200 to 200
+  cubes.push(c);
+}
+
+console.log(cubes.length);
+
 scene.add(axesHelper);
-scene.add(cube, sphere, light, lightHelper);
+scene.add(cube, sphere, light, lightHelper, ...cubes);
 
 renderer.render(scene, camera);
 
 function animate() {
-  light.position.x = +0.1;
+  cube.rotation.x += 0.01;
+  cube.rotation.y += 0.01;
+  cube.rotation.z += 0.01;
+
+  cubes.forEach(function (c) {
+    c.rotation.x -= 0.01;
+    c.rotation.y -= 0.01;
+    c.rotation.z -= 0.01;
+  });
+
   // cube.rotation.z -= 0.1;
   // cube.position.z -= 0.1;
   // Muck around with the axes
